@@ -1,0 +1,84 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $nama = htmlspecialchars($_POST["nama"]);
+  $meja = htmlspecialchars($_POST["meja"]);
+  $makanan = htmlspecialchars($_POST["makanan"]);
+  $minuman = htmlspecialchars($_POST["minuman"]);
+  $dessert = htmlspecialchars($_POST["dessert"]);
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Pemesanan Restoran</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    function validateForm() {
+      const nama = document.forms["formPesanan"]["nama"].value;
+      const meja = document.forms["formPesanan"]["meja"].value;
+
+      if (nama === "" || meja === "") {
+        alert("Nama dan No. Meja wajib diisi!");
+        return false;
+      }
+      return true;
+    }
+  </script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Form Pemesanan Restoran</h2>
+
+  <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
+    <div class="hasil">
+      <h3>Terima Kasih, Pesanan Anda:</h3>
+      <p><strong>Nama:</strong> <?= $nama ?></p>
+      <p><strong>No. Meja:</strong> <?= $meja ?></p>
+      <p><strong>Menu Utama:</strong> <?= $makanan ?></p>
+      <p><strong>Minuman:</strong> <?= $minuman ?></p>
+      <p><strong>Dessert:</strong> <?= $dessert ?></p>
+      <a href="index.php">Kembali</a>
+    </div>
+  <?php else: ?>
+
+  <form name="formPesanan" method="post" onsubmit="return validateForm()">
+    <label>Nama Pelanggan:</label>
+    <input type="text" name="nama">
+
+    <label>Nomor Meja:</label>
+    <input type="number" name="meja" min="1">
+
+    <label>Menu Utama:</label>
+    <select name="makanan">
+      <option value="Nasi Goreng">Nasi Goreng</option>
+      <option value="Nasi Uduk">Nasi Uduk</option>
+      <option value="Tomyam">Tomyam</option>
+      <option value="Nasi Padang">Nasi Padang</option>
+      <option value="Nasi Kari">Nasi Kari</option>
+    </select>
+
+    <label>Minuman:</label>
+    <select name="minuman">
+      <option value="Es Teh">Es Teh</option>
+      <option value="Es Jeruk">Es Jeruk</option>
+      <option value="Es Kelapa">Es Kelapa</option>
+      <option value="Air Mineral">Air Mineral</option>
+    </select>
+
+    <label>Dessert:</label>
+    <select name="dessert">
+      <option value="Es Krim">Es Krim</option>
+      <option value="Cheese Cake">Cheese Cake</option>
+      <option value="Mochi">Mochi</option>
+      <option value="Waffle">Waffle</option>
+    </select>
+
+    <button type="submit">Kirim Pesanan</button>
+  </form>
+  <?php endif; ?>
+</div>
+
+</body>
+</html>
